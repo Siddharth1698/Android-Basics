@@ -10,10 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 
 
-
-public class Frag1 extends Fragment {
+public class Frag1 extends Fragment implements OnFragmentInteractionListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -49,7 +49,9 @@ public class Frag1 extends Fragment {
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
+
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,28 +60,33 @@ public class Frag1 extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_frag1, container, false);
-        Button butto = (Button) view.findViewById(R.id.button2);
+        Button butto = (Button)view.findViewById(R.id.button2);
         butto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment frag = Frag1.newInstance("","");
-                replaceFrag(frag);
+
+                Fragment frago = Frag2.newInstance("","");
+                replaceFrag(frago);
             }
         });
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_frag1, container, false);
+        return view;
     }
 
-    private void replaceFrag(Fragment frag) {
-        FragmentManager fm = getChildFragmentManager();
+    private void replaceFrag(Fragment frago) {
+
+        FragmentManager fm = getActivity().getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.cont,frag);
+        ft.replace(R.id.sa,frago);
+        ft.addToBackStack(null);
         ft.commit();
     }
 
@@ -105,6 +112,11 @@ public class Frag1 extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 
     /**

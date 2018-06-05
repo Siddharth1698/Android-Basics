@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.myContainer,frag);
+        ft.addToBackStack(null);
         ft.commit();
     }
 
