@@ -1,30 +1,34 @@
 package com.example.siddharthm.animationdemo;
 
-import android.graphics.drawable.AnimationDrawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.app.Activity;
+import android.graphics.drawable.AnimationDrawable;
 import android.widget.ImageView;
 
-public class MainActivity extends AppCompatActivity {
-    ImageView ann;
+public class MainActivity extends Activity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    ImageView anm;
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.logo);
-        ann = (ImageView)findViewById(R.id.imgv);
-       ann.setBackgroundResource(R.drawable.animation);
+        anm = (ImageView)findViewById(R.id.anm);
 
+        anm.setBackgroundResource(R.drawable.animation);
+        // the frame-by-frame animation defined as a xml file within the drawable folder
+
+        /*
+         * NOTE: It's not possible to start the animation during the onCreate.
+         */
     }
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
+    public void onWindowFocusChanged (boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        AnimationDrawable frameAnimation = (AnimationDrawable)ann.getBackground();
-        if(hasFocus){
+        AnimationDrawable frameAnimation =
+                (AnimationDrawable) anm.getBackground();
+        if(hasFocus) {
             frameAnimation.start();
-        }else {
+        } else {
             frameAnimation.stop();
         }
     }
+
 }
