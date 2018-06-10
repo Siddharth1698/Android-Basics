@@ -2,6 +2,7 @@ package com.example.siddharthm.sqlitedb;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -36,15 +37,22 @@ public class dataBaseHelper extends SQLiteOpenHelper {
     public Boolean insertData(String name, String surname, String marks) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_2,name);
-        contentValues.put(COL_3,surname);
-        contentValues.put(COL_4,marks);
-        long result = db.insert(TABLE_NAME,null,contentValues);
-        if(result == -1){
+        contentValues.put(COL_2, name);
+        contentValues.put(COL_3, surname);
+        contentValues.put(COL_4, marks);
+        long result = db.insert(TABLE_NAME, null, contentValues);
+        if (result == -1) {
             return false;
-        }
-        else {
+        } else {
             return true;
         }
+    }
+
+        public Cursor getAllData(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME,null);
+        return res;
+
+
     }
 }
