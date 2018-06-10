@@ -107,4 +107,13 @@
         android:layout_toEndOf="@+id/textView3"
         android:ems="10"
         android:inputType="textPersonName" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="171dp"
+        android:layout_toEndOf="@+id/textView"
+        android:text="Delete" />
 </RelativeLayout>

@@ -13,7 +13,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
     dataBaseHelper myDb;
     EditText ed1,ed2,ed3,ed4;
-    Button b,b2,b3;
+    Button b,b2,b3,b4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +27,12 @@ public class MainActivity extends AppCompatActivity {
         b = (Button)findViewById(R.id.button);
         b2 = (Button)findViewById(R.id.button2);
         b3 = (Button)findViewById(R.id.button3);
+        b4 = (Button)findViewById(R.id.button4);
 
         AddData();
         viewAll();
         updateData();
+        deleteData();
 
  }
 
@@ -100,6 +102,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void deleteData(){
+        b4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Integer deletedRows = myDb.deleteData(ed4.getText().toString());
+                if(deletedRows > 0){
+                    Toast.makeText(MainActivity.this,"Data deleted",Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(MainActivity.this,"Data not deleted",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
 }
