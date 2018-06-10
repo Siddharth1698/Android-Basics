@@ -1,5 +1,6 @@
 package com.example.siddharthm.sqlitedb;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
@@ -18,12 +19,12 @@ public class dataBaseHelper extends SQLiteOpenHelper {
 
     public dataBaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version, DatabaseErrorHandler errorHandler) {
         super(context, name, factory, version, errorHandler);
-        SQLiteDatabase db = this.getWritableDatabase();
+
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table "+TABLE_NAME + " (ID INTIGER PRIMARY KEY AUTOINCREMENT , NAME TEXT, SURNAME TEXT, MARKS TEXT ) ");
+        db.execSQL("create table "+TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT , NAME TEXT, SURNAME TEXT, MARKS TEXT ) ");
 
     }
 
@@ -31,5 +32,19 @@ public class dataBaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS "+  TABLE_NAME );
 
+    }
+    public Boolean insertData(String name, String surname, String marks) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_2,name);
+        contentValues.put(COL_3,surname);
+        contentValues.put(COL_4,marks);
+        long result = db.insert(TABLE_NAME,null,contentValues);
+        if(result == -1){
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 }
