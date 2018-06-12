@@ -68,9 +68,9 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/textView"
-        android:layout_marginTop="216dp"
+        android:layout_marginBottom="145dp"
         android:text="add data " />
 
     <Button
@@ -79,15 +79,16 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/button"
-        android:layout_marginEnd="52dp"
+        android:layout_marginEnd="40dp"
         android:text="VIEW" />
 
     <Button
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/button"
-        android:layout_toEndOf="@+id/textView"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="204dp"
         android:text="Update" />
 
     <TextView
@@ -113,7 +114,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="171dp"
-        android:layout_toEndOf="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="80dp"
         android:text="Delete" />
 </RelativeLayout>

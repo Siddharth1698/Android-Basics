@@ -1,5 +1,4 @@
 package com.example.siddharthm.sqldemo;
-
 public class Contact {
     int _id;
     String _name;
@@ -27,7 +26,7 @@ public class Contact {
         return this._name;
     }
 
-    public void setName(int name){
+    public void setName(String name){
         this._name = name;
     }
 
@@ -35,7 +34,7 @@ public class Contact {
         return this._phone_number;
     }
 
-    public void setPhoneNumber(int phone_number){
+    public void setPhoneNumber(String phone_number){
         this._phone_number = phone_number;
     }
 }
