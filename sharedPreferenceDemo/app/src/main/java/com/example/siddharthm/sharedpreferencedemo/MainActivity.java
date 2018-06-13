@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences sp;
     SharedPreferences dp;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
         b = (Button)findViewById(R.id.button);
 
         sp = getSharedPreferences(MyPREFERENCES,Context.MODE_PRIVATE);
-
 
         b.setOnClickListener(new View.OnClickListener() {
                                  @Override

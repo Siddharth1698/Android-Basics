@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
                 Picasso.get().load("https://blogs-images.forbes.com/erikkain/files/2017/10/ACO_CurseofPharaoh_Thebes_ScorpionFight_1507597412.jpg").into(i2);
 
 
-                Picasso.get().load("https://static-ca.ebgames.ca/images/products/732184/8scrmax3.jpg").into(i3);
+                Picasso.get().load("https://static-ca.ebgames.ca/images/products/732184/8scrmax3.jpg").resize(230,100).into(i3);
 
 
                 Picasso.get().load("https://cdn.wccftech.com/wp-content/uploads/2017/07/Assassins-Creed-Origins-1.jpg").into(i4);

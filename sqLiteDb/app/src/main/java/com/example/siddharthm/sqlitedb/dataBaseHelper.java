@@ -20,14 +20,12 @@ public class dataBaseHelper extends SQLiteOpenHelper {
 
     public dataBaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version, DatabaseErrorHandler errorHandler) {
         super(context, name, factory, version, errorHandler);
-
-    }
+        }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table "+TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT , NAME TEXT, SURNAME TEXT, MARKS TEXT ) ");
-
-    }
+        }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

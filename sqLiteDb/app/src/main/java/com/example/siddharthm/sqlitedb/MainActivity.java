@@ -49,9 +49,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this,"Data not inserted",Toast.LENGTH_SHORT).show();
                 }
             }
-
         });
-
     }
 
     public void viewAll(){
