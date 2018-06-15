@@ -48,8 +48,6 @@ public class Main2Activity extends AppCompatActivity {
                     String buffer = new String();
                     while (res.moveToNext()){
                         buffer ="PASS: " + res.getString(1)+"\n";
-
-
                     }
                     textPass.setText(buffer);
                 }

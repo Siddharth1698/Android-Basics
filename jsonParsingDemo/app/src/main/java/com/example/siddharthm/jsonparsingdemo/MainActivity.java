@@ -1,0 +1,101 @@
+package com.example.siddharthm.jsonparsingdemo;
+
+import android.os.AsyncTask;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity {
+    private String TAG = MainActivity.class.getSimpleName();
+    private ListView lw;
+
+    ArrayList<HashMap<String,String>> contactList;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        contactList = new ArrayList<>();
+        lw = (ListView)findViewById(R.id.list);
+        new getContacts().execute();
+    }
+
+    private class getContacts extends AsyncTask<Void,Void,Void>{
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Toast.makeText(getApplicationContext(),"JSON DATA DOWNLOADING",Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            HttpHandler sh = new HttpHandler();
+            String url = "http://iroidtech.com/wecare/api/news_events/list?format=json";
+
+
+            String jsonStr = sh.makeServiceCall(url);
+
+            if(jsonStr != null){
+                try {
+                    JSONArray jsonObject = new JSONArray(jsonStr);
+                    for(int i = 0 ; i < jsonObject.length();i++){
+                        JSONObject c = jsonObject.getJSONObject(i);
+                        String id = c.getString("id");
+                        String title = c.getString("title");
+
+                        HashMap<String,String> contact = new HashMap<>();
+                        contact.put("id",id);
+                        contact.put("title", title);
+                        contactList.add(contact);
+                    }
+                } catch (final JSONException e) {
+                    Log.e(TAG, "Json parsing error: " + e.getMessage());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(),
+                                    "Json parsing error: " + e.getMessage(),
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    });
+
+                }
+
+            } else {
+                Log.e(TAG, "Couldn't get json from server.");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(),
+                                "Couldn't get json from server.",
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+
+            return null;
+        }
+
+
+
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            ListAdapter adapter = new SimpleAdapter(MainActivity.this,contactList,R.layout.list_item, new String[]{"id","title"}, new int[]{R.id.email,R.id.mobile});
+            lw.setAdapter(adapter);
+        }
+    }
+}
