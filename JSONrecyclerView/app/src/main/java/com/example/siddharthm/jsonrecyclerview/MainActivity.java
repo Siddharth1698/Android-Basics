@@ -1,5 +1,6 @@
-package com.example.siddharthm.recyclerviewjsondemo;
+package com.example.siddharthm.jsonrecyclerview;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,7 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.ProgressBar;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -15,39 +16,37 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements detail.OnItemClickListener{
     private static final String TAG = "RecyclerViewExample";
-
     private List<FeedItem> feedsList;
-    private RecyclerView mRecyclerView;
+    private RecyclerView mrecyclerView;
     private MyRecyclerViewAdapter adapter;
-    private ProgressBar progressBar;
+    public static final String EXTRA_URL = "imageUrl";
+    public static final String EXTRA_TITLE = "title";
+    public static final String EXTRA_SUBTITLE = "subtitle";
+    public static final String EXTRA_DESC = "DESC";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-
-        String url = "http://stacktips.com/?json=get_category_posts&slug=news&count=30";
+        mrecyclerView = (RecyclerView)findViewById(R.id.recycler_view);
+        mrecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        String url = "http://iroidtech.com/wecare/api/news_events/list?format=json";
         new DownloadTask().execute(url);
+
     }
 
-    public class DownloadTask extends AsyncTask<String, Void, Integer> {
+    private class DownloadTask extends AsyncTask<String,Void,Integer>{
 
-        @Override
-        protected void onPreExecute() {
-            progressBar.setVisibility(View.VISIBLE);
-        }
 
         @Override
         protected Integer doInBackground(String... params) {
@@ -78,16 +77,28 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(Integer result) {
-            progressBar.setVisibility(View.GONE);
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(final Integer result) {
 
             if (result == 1) {
-                adapter = new MyRecyclerViewAdapter(MainActivity.this, feedsList);
-                mRecyclerView.setAdapter(adapter);
+                adapter = new MyRecyclerViewAdapter(feedsList,MainActivity.this);
+                mrecyclerView.setAdapter(adapter);
                 adapter.setOnItemClickListener(new OnItemClickListener() {
                     @Override
-                    public void onItemClick(FeedItem item) {
-                        Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
+                    public void onItemClick(int position) {
+
+                        Intent detailIntent = new Intent(MainActivity.this,detail.class);
+                        FeedItem clickedItem = feedsList.get(position);
+                        detailIntent.putExtra(EXTRA_URL,clickedItem.getThumbnail());
+                        detailIntent.putExtra(EXTRA_TITLE, clickedItem.getTitle());
+                        detailIntent.putExtra(EXTRA_SUBTITLE, clickedItem.getSubtitle());
+                        detailIntent.putExtra(EXTRA_DESC, clickedItem.getDescription());
+
+                        startActivity(detailIntent);
 
                     }
                 });
@@ -100,19 +111,23 @@ public class MainActivity extends AppCompatActivity {
 
     private void parseResult(String result) {
         try {
-            JSONObject response = new JSONObject(result);
-            JSONArray posts = response.optJSONArray("posts");
-            feedsList = new ArrayList<>();
+            JSONArray response = new JSONArray(result);
 
-            for (int i = 0; i < posts.length(); i++) {
-                JSONObject post = posts.optJSONObject(i);
+            feedsList = new ArrayList<>();
+            for (int i = 0 ; i < response.length();i++){
+                JSONObject post = response.optJSONObject(i);
                 FeedItem item = new FeedItem();
                 item.setTitle(post.optString("title"));
-                item.setThumbnail(post.optString("image"));
+                item.setSubtitle(post.optString("subtitle"));
+                String u = post.getString("image");
+                item.setThumbnail("http://iroidtech.com/wecare/uploads/news_events/"+u);
+                item.setDescription(post.optString("description"));
                 feedsList.add(item);
+
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 }
+

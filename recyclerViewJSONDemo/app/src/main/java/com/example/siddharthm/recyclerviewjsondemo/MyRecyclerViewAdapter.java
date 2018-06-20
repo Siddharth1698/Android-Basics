@@ -12,9 +12,6 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 
-/**
- * Created by Nilanchala Panigrahy on 10/25/16.
- */
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.CustomViewHolder> {
     private List<FeedItem> feedItemList;
@@ -37,7 +34,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public void onBindViewHolder(CustomViewHolder customViewHolder, int i) {
         final FeedItem feedItem = feedItemList.get(i);
 
-        //Download image using picasso library
+
         if (!TextUtils.isEmpty(feedItem.getThumbnail())) {
             Picasso.with(mContext).load(feedItem.getThumbnail())
                     .error(R.drawable.ic_launcher_background)
@@ -45,7 +42,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                     .into(customViewHolder.imageView);
         }
 
-        //Setting text view title
+
         customViewHolder.textView.setText(Html.fromHtml(feedItem.getTitle()));
 
 
