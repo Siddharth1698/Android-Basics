@@ -8,6 +8,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -48,13 +50,12 @@ class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
             public void onMapClick(LatLng latLng) {
 
 
-                MarkerOptions markerOptions = new MarkerOptions();
+                BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.ic_current_pos);
 
-
-                markerOptions.position(latLng);
-
-
-                markerOptions.title(latLng.latitude + " : " + latLng.longitude);
+                MarkerOptions markerOptions = new MarkerOptions().position(latLng)
+                        .title(latLng.latitude + " : " + latLng.longitude)
+                        .snippet("Thinking of finding some thing...")
+                        .icon(icon);
 
                 Toast.makeText(getApplicationContext(),"Latitude: "+latLng.latitude+ " Longitude: "+ latLng.longitude,Toast.LENGTH_SHORT).show();
 
@@ -69,6 +70,7 @@ class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
             }
         });
     }
+
 
 
 }
