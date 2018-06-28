@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void addNotification() {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this).setSmallIcon(R.drawable.abc).setContentTitle("Notif").setContentText("Here is a notification");
-        Intent notifIntent = new Intent(this,MainActivity.class);
+        Intent notifIntent = new Intent(this,NotificationView.class);
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notifIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(contentIntent);
 
